@@ -1,0 +1,28 @@
+<!--
+ - Created by wnardo on 9/2/2022.
+ -->
+
+<!-- Form Result -->
+<template>
+
+	<template if:true={isLoading}>
+		<div style="position:relative;">
+			<div style="position: absolute;display: inline-block;width: 100%;height: 270px;">
+				<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+			</div>
+		</div>
+	</template>
+	<template if:false={isLoading}>
+		<div class="slds-grid slds-gutters slds-wrap">
+				<template for:each={responses} for:item="res" for:index="index">
+					<div key={res.Id} class="slds-col slds-size_3-of-12">
+						<span style="font-weight: bold">{res.Name}:</span>
+					</div>
+					<div key={res.Id} class="slds-col slds-size_3-of-12">
+						<span> {res.Response__c}</span>
+					</div>
+				</template>
+			</div>
+	</template>
+
+</template>

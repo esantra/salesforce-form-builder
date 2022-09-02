@@ -1,0 +1,130 @@
+<!--
+ - Created by wnardo on 9/2/2022.
+ -->
+
+<!-- Form Viewer -->
+<template>
+
+	<template if:true={isLoading}>
+		<div style="position:relative;">
+			<div style="position: absolute;display: inline-block;width: 100%;height: 270px;">
+				<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+			</div>
+		</div>
+	</template>
+	<template if:false={isLoading}>
+		<template if:false={exist}>
+			<div class="slds-grid slds-gutters slds-wrap">
+				<div class="slds-col slds-size_1-of-1">
+					<div class="slds-align_absolute-center">
+						<lightning-icon icon-name="standard:incident" alternative-text="incident" title="incident"></lightning-icon>
+					</div>
+				</div>
+			</div>
+			<div class="slds-grid slds-gutters slds-wrap" style="margin-top:10px;">
+				<div class="slds-col slds-size_1-of-1">
+					<div class="slds-align_absolute-center">
+						<span style="font-size: 20px; font-weight: bold">Nessun form abilitato trovato.</span>
+					</div>
+				</div>
+			</div>
+		</template>
+		<template if:true={exist}>
+			<div class="slds-grid slds-gutters slds-wrap">
+				<div class="slds-col slds-size_1-of-1">
+					<div class="slds-align_absolute-center">
+						<span style="font-weight:bold; font-size:30px;">{title}</span>
+					</div>
+				</div>
+			</div>
+			<template if:false={submitted}>
+				<div class="slds-grid slds-gutters slds-wrap">
+					<div class="slds-col slds-size_1-of-1">
+						<template for:each={definitions} for:item="def" for:index="index">
+							<div key={def.Id} class="slds-col slds-size_12-of-12">
+								<template if:true={def.isText}>
+									<lightning-input type="text" key={def.Id}
+									                 data-id={def.Id}
+									                 required={def.Required__c}
+									                 read-only={def.Readonly__c}
+									                 label={def.Name}
+									                 value={def.DefaultValue__c}
+									                 onblur={handleInputChange}
+									></lightning-input>
+								</template>
+								<template if:true={def.isEmail}>
+									<lightning-input type="email" key={def.Id}
+									                 data-id={def.Id}
+									                 required={def.Required__c}
+									                 read-only={def.Readonly__c}
+									                 label={def.Name}
+									                 value={def.DefaultValue__c}
+									                 onblur={handleInputChange}
+									></lightning-input>
+								</template>
+								<template if:true={def.isNumber}>
+									<lightning-input type="number" key={def.Id}
+									                 data-id={def.Id}
+									                 required={def.Required__c}
+									                 read-only={def.Readonly__c}
+									                 label={def.Name}
+									                 value={def.DefaultValue__c}
+									                 onblur={handleInputChange}
+									></lightning-input>
+								</template>
+								<template if:true={def.isDate}>
+									<lightning-input type="date" key={def.Id}
+									                 data-id={def.Id}
+									                 required={def.Required__c}
+									                 read-only={def.Readonly__c}
+									                 label={def.Name}
+									                 value={def.DefaultValue__c}
+									                 onblur={handleInputChange}
+									></lightning-input>
+								</template>
+								<template if:true={def.isCheckbox}>
+									<lightning-input type="checkbox" key={def.Id}
+									                 data-id={def.Id}
+									                 required={def.Required__c}
+									                 label={def.Name}
+									                 onchange={handleInputChange}
+									></lightning-input>
+								</template>
+							</div>
+
+						</template>
+					</div>
+
+				</div>
+				<div class="slds-grid slds-gutters slds-wrap" style="margin-top: 10px;">
+					<div class="slds-col slds-size_1-of-1">
+						<div class="slds-align_absolute-center">
+							<lightning-button label={submitLabel} icon-name="utility:save"
+							                  variant="brand"
+							                  onclick={handleSubmit}
+							                  class="slds-m-left_x-small"></lightning-button>
+						</div>
+					</div>
+				</div>
+			</template>
+			<template if:true={submitted}>
+
+				<div class="slds-grid slds-gutters slds-wrap" style="margin-top: 20px;">
+					<div class="slds-col slds-size_1-of-1">
+						<div class="slds-align_absolute-center">
+							<lightning-icon icon-name="action:approval" alternative-text="Approved" title="Approved"></lightning-icon>
+						</div>
+					</div>
+				</div>
+				<div class="slds-grid slds-gutters slds-wrap" style="margin-top:10px;">
+					<div class="slds-col slds-size_1-of-1">
+						<div class="slds-align_absolute-center">
+							<span style="font-size: 20px; ">{successMessage}</span>
+						</div>
+					</div>
+				</div>
+			</template>
+		</template>
+	</template>
+
+</template>
