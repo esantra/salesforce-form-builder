@@ -289,7 +289,6 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
-    <gender>Feminine</gender>
     <label>Form Field</label>
     <listViews>
         <fullName>All</fullName>
